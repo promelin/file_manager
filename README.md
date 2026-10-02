@@ -4,7 +4,7 @@
 
 Requested analyses live beside `raw/` and `processed/` under `data_analysis/<user-chosen-name>/`. Each analysis directory contains only `analysis.py` and `results.txt` unless the user explicitly asks for additional outputs.
 
-When an existing processed dataset needs filtering or refinement, update the existing `processed/process.py` and safely replace the canonical processed output. Do not create parallel filter scripts or duplicate output variants.
+When an existing processed dataset needs filtering or refinement, update the existing `processed/process.py` and safely replace the canonical processed output. Do not create parallel filter scripts or duplicate output variants. Record the exact rules, parameters, before-and-after counts, removals by reason, validation results, output replacement, and any errors in the existing `processed/process.log`.
 
 ## Install in Codex
 

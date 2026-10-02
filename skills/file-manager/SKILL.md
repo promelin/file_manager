@@ -103,7 +103,7 @@ Treat a later request to filter, exclude, deduplicate, or otherwise refine alrea
 - Re-run `process.py` from the unchanged raw inputs and replace the existing canonical processed output at the same path.
 - Write the replacement to a temporary sibling path first, validate that the run completed successfully, and then atomically replace the canonical output. If processing fails, preserve the previous canonical output and remove the temporary artifact.
 - Keep one `process.py`, one `process.log`, and one canonical output path or output set for each logical dataset. Do not retain duplicate variants with suffixes such as `_old`, `_new`, `_filtered`, or `_v2` unless the user explicitly requests versioned outputs.
-- Record the filtering criteria, input count, retained count, removed count, and replaced output path in the existing `process.log`.
+- Record the filtering run in detail in the existing `process.log`. Include the timestamp, raw input paths, exact filtering rules and parameters, input count, retained count, total removed count, removal counts grouped by reason when applicable, validation checks and their results, temporary output path, canonical output path, replacement status, completion status, and actionable error details. Never record only a generic message such as "filter completed."
 - Never filter by modifying files in `raw/`. Filtering belongs in `process.py` and changes only the canonical output under `processed/`.
 - Do not place filtering work under `data_analysis/`; filtering changes the dataset itself, while analysis only interprets it.
 
