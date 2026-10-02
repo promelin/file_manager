@@ -1,17 +1,31 @@
 ---
 name: file-manager
-description: Organize raw downloads and processed datasets for model-development work. Use when a task involves acquiring, preparing, transforming, training with, fine-tuning on, or evaluating against one or more datasets.
+description: Standardize dataset downloads and post-processing inside a user-specified data directory. Use when the user identifies a work or data directory and asks to download one or more datasets, or asks to process datasets already managed there; do not trigger for model training alone.
 ---
 
 # Model Data File Manager
 
-For model-development work, keep dataset acquisition and post-processing reproducible and auditable under the task's top-level working directory.
+Keep dataset downloads, processing code, logs, and outputs inside one normalized data tree so model-development tasks do not scatter files across the working directory.
+
+## Trigger boundary
+
+Use this skill when either condition is met:
+
+- The user identifies a working directory or a `data` directory and asks to download one or more named datasets there.
+- The user asks to continue by processing a dataset already organized under that same data directory.
+
+Do not trigger merely because a task mentions model training, fine-tuning, inference, or evaluation. Do not use it for unrelated file organization. If the skill is invoked explicitly but the target working or data directory is ambiguous, ask the user to identify it before creating or downloading files.
+
+## Resolve the data root
+
+- If the user specifies a directory named `data`, use that directory exactly as the data root.
+- If the user specifies a project or working directory, create or use its direct child named `data`.
+- Keep downloaded data, processing artifacts, dataset-specific scripts, and their logs inside this data root. Do not leave generated dataset files elsewhere in the working directory.
+- Resolve the path before downloading or processing anything, and report the resolved data root.
 
 ## Choose the layout
 
-Treat the project or task root selected by the user as the top-level working directory. Create `data/` directly under that directory.
-
-Use this layout when the task has one dataset:
+Use this layout when the data root contains one dataset:
 
 ```text
 data/
@@ -25,7 +39,7 @@ data/
     └── <processed output files>
 ```
 
-Use this layout when the task has multiple distinct datasets:
+Use this layout when the data root contains multiple distinct datasets:
 
 ```text
 data/
@@ -45,6 +59,8 @@ data/
 
 Use short, stable, filesystem-safe dataset directory names. Do not add a dataset-name level for a single dataset unless the user requests it or the existing project already follows that convention.
 
+Do not mix the single-dataset and multi-dataset layouts in one data root. When a second dataset is added to an existing single-dataset tree, reorganize the existing dataset under `data/<existing-dataset-name>/` before adding the new dataset. Preserve all existing files and ask for the existing dataset name only when it cannot be determined safely.
+
 ## Download raw data
 
 Place each dataset's download implementation in its `raw/download.py`.
@@ -54,6 +70,7 @@ Place each dataset's download implementation in its `raw/download.py`.
 - Preserve downloaded source files unchanged; do not overwrite or transform them during post-processing.
 - Do not hard-code passwords, API keys, access tokens, or other credentials. Use the environment or the user's existing authenticated tooling.
 - Write download progress and outcomes to `raw/download.log`, including timestamps, sources, destinations, completion status, and actionable error details. Record file sizes or checksums when they materially help verify integrity.
+- Make `download.py` configure and write its sibling `download.log`; do not rely on an unrelated top-level log.
 - If downloading requires credentials, acceptance of terms, substantial cost, or another user-authorized external action, stop at the relevant boundary and obtain the required authorization.
 
 ## Process data
@@ -64,12 +81,13 @@ Place each dataset's post-processing implementation in its `processed/process.py
 - Read source data from the matching `raw/` directory and write generated data only to the matching `processed/` directory.
 - Keep processing reproducible and safe to rerun. Use explicit parameters or a deterministic seed when randomness is required.
 - Write a detailed execution record to `processed/process.log`, including timestamps, input paths, configured transformations, relevant counts or shapes, output paths, completion status, and actionable error details.
+- Make `process.py` configure and write its sibling `process.log`; do not rely on an unrelated top-level log.
 - Keep intermediate and final processed artifacts in `processed/`; do not modify the original raw files.
 
 ## Work with existing projects
 
 Inspect the current tree before creating files. Preserve compatible existing data, scripts, logs, and project conventions. Add missing pieces or make the smallest necessary update instead of deleting or silently replacing user files.
 
-When the user asks to execute the workflow, run the relevant scripts and verify their outputs and logs. When the request only calls for scaffolding or planning, create the required structure and scripts without initiating downloads or expensive processing.
+When the user asks to execute the workflow, run the relevant scripts and verify their outputs and logs. When the request only calls for scaffolding or planning, create the required structure and scripts without initiating downloads or expensive processing; initialize each log with a clear `NOT_RUN` status instead of inventing progress or success.
 
 In the final response, summarize the chosen single- or multi-dataset layout, the created or updated scripts, the generated data artifacts, and the locations of both logs. Clearly report any download or processing step that was not run.

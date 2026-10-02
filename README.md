@@ -1,6 +1,6 @@
 # File Manager
 
-`file-manager` is a Codex plugin that keeps model-development datasets reproducible and auditable. It creates separate raw-download and processed-data workflows, with scripts and detailed logs for one or many datasets.
+`file-manager` is a Codex plugin that normalizes dataset files under a user-specified `data` directory. When the user asks to download a dataset and then process it, the plugin keeps raw files, processed files, scripts, and logs in a predictable single- or multi-dataset layout instead of scattering them across the working directory.
 
 ## Install in Codex
 
