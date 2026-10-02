@@ -1,7 +1,7 @@
 {
   "name": "file-manager",
-  "version": "0.1.1",
-  "description": "Standardize dataset downloads and post-processing inside a user-specified data directory.",
+  "version": "0.2.0",
+  "description": "Standardize dataset downloads, post-processing, and scoped analysis inside a user-specified data directory.",
   "author": {
     "name": "promelin",
     "url": "https://github.com/promelin"
@@ -16,20 +16,21 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "File Manager",
-    "shortDescription": "Normalize raw and processed dataset files",
-    "longDescription": "Keep downloaded datasets, processing scripts, logs, and outputs in a normalized data tree for single- or multi-dataset model-development workflows.",
+    "shortDescription": "Normalize raw, processed, and analysis files",
+    "longDescription": "Keep downloaded datasets, processing workflows, and user-scoped analyses in a normalized data tree for single- or multi-dataset model-development work.",
     "developerName": "promelin",
     "category": "Research",
     "capabilities": [
       "Dataset organization",
       "Reproducible downloads",
-      "Data processing logs"
+      "Data processing logs",
+      "Scoped data analysis"
     ],
     "websiteURL": "https://github.com/promelin/file_manager",
     "defaultPrompt": [
       "Download this dataset into the specified data directory, then process it as requested.",
-      "Normalize the existing single-dataset files under this data directory.",
-      "Prepare separate raw and processed workflows for multiple datasets in this data directory."
+      "Prepare separate raw and processed workflows for multiple datasets in this data directory.",
+      "Analyze this managed dataset in a user-named data_analysis subdirectory."
     ]
   }
 }

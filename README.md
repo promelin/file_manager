@@ -1,6 +1,8 @@
 # File Manager
 
-`file-manager` is a Codex plugin that normalizes dataset files under a user-specified `data` directory. When the user asks to download a dataset and then process it, the plugin keeps raw files, processed files, scripts, and logs in a predictable single- or multi-dataset layout instead of scattering them across the working directory.
+`file-manager` is a Codex plugin that normalizes dataset files under a user-specified `data` directory. When the user asks to download, process, or analyze a dataset, the plugin keeps raw files, processed files, scripts, logs, and analysis results in a predictable single- or multi-dataset layout instead of scattering them across the working directory.
+
+Requested analyses live beside `raw/` and `processed/` under `data_analysis/<user-chosen-name>/`. Each analysis directory contains only `analysis.py` and `results.txt` unless the user explicitly asks for additional outputs.
 
 ## Install in Codex
 
@@ -23,4 +25,5 @@ Examples:
 
 - `Use $file-manager to download and preprocess CIFAR-10 for this training project.`
 - `Organize MNIST and Fashion-MNIST as separate datasets for model evaluation.`
+- `Analyze solvent kinds in the managed dataset and use solvent_kinds as the analysis directory.`
 - `Create the data workflow, but do not download or process anything yet.`

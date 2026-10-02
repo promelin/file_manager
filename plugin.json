@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "file-manager",
-  "version": "0.1.1",
-  "description": "Organize model-development datasets into reproducible raw-download and processed-data workflows.",
+  "version": "0.2.0",
+  "description": "Standardize dataset downloads, post-processing, and scoped analysis inside a user-specified data directory.",
   "author": {
     "name": "promelin",
     "url": "https://github.com/promelin"
@@ -18,20 +18,21 @@
     "com.openai": {
       "interface": {
         "displayName": "File Manager",
-        "shortDescription": "Reproducible model-data organization",
-        "longDescription": "Organize model-development data into auditable raw downloads and task-specific processed outputs, with reproducible scripts and detailed logs for single or multiple datasets.",
+        "shortDescription": "Normalize raw, processed, and analysis files",
+        "longDescription": "Keep downloaded datasets, processing workflows, and user-scoped analyses in a normalized data tree for single- or multi-dataset model-development work.",
         "developerName": "promelin",
         "category": "Research",
         "capabilities": [
           "Dataset organization",
           "Reproducible downloads",
-          "Data processing logs"
+          "Data processing logs",
+          "Scoped data analysis"
         ],
         "websiteURL": "https://github.com/promelin/file_manager",
         "defaultPrompt": [
-          "Organize the datasets for this model-development task.",
-          "Create a reproducible download and preprocessing workflow for this dataset.",
-          "Prepare separate raw and processed workflows for these datasets."
+          "Download this dataset into the specified data directory, then process it as requested.",
+          "Prepare separate raw and processed workflows for multiple datasets in this data directory.",
+          "Analyze this managed dataset in a user-named data_analysis subdirectory."
         ]
       }
     }
