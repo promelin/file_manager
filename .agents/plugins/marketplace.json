@@ -1,0 +1,20 @@
+{
+  "name": "file-manager",
+  "interface": {
+    "displayName": "File Manager"
+  },
+  "plugins": [
+    {
+      "name": "file-manager",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
+    }
+  ]
+}
