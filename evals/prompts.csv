@@ -1,0 +1,8 @@
+id,should_trigger,prompt,expected_behavior
+single-dataset,true,"Download the CIFAR-10 data and prepare it for a PyTorch image classifier.","Create data/raw and data/processed; place download.py and download.log under raw and process.py and process.log under processed."
+implicit-model-work,true,"Fine-tune a text classifier with this corpus after cleaning and splitting it.","Recognize the model-development data workflow and use the single-dataset layout."
+multi-dataset,true,"Train a joint model using MNIST and Fashion-MNIST, normalizing each dataset independently.","Create data/mnist/raw and processed plus data/fashion-mnist/raw and processed, each with its own scripts and logs."
+scaffold-only,true,"Set up the dataset directories and scripts for my model project, but do not download or process anything yet.","Create the structure and scripts without initiating external downloads or processing."
+existing-project,true,"Add preprocessing for the files already in data/raw without deleting the originals.","Inspect and preserve existing files; write processing code, log, and outputs under data/processed."
+unrelated-file-task,false,"Rename the PDF files in this folder by publication year.","Do not activate this model-data workflow."
+unrelated-code-task,false,"Refactor this web application's routing layer.","Do not create a data directory or activate the skill."
