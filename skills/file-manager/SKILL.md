@@ -94,6 +94,19 @@ Place each dataset's post-processing implementation in its `processed/process.py
 - Make `process.py` configure and write its sibling `process.log`; do not rely on an unrelated top-level log.
 - Keep intermediate and final processed artifacts in `processed/`; do not modify the original raw files.
 
+### Revise an existing processed output
+
+Treat a later request to filter, exclude, deduplicate, or otherwise refine already processed data as a revision of the existing post-processing pipeline, not as a separate workflow.
+
+- Add the new filtering logic to the existing `processed/process.py`.
+- Do not create parallel scripts such as `filter.py`, `process_filter.py`, `process_v2.py`, or a notebook.
+- Re-run `process.py` from the unchanged raw inputs and replace the existing canonical processed output at the same path.
+- Write the replacement to a temporary sibling path first, validate that the run completed successfully, and then atomically replace the canonical output. If processing fails, preserve the previous canonical output and remove the temporary artifact.
+- Keep one `process.py`, one `process.log`, and one canonical output path or output set for each logical dataset. Do not retain duplicate variants with suffixes such as `_old`, `_new`, `_filtered`, or `_v2` unless the user explicitly requests versioned outputs.
+- Record the filtering criteria, input count, retained count, removed count, and replaced output path in the existing `process.log`.
+- Never filter by modifying files in `raw/`. Filtering belongs in `process.py` and changes only the canonical output under `processed/`.
+- Do not place filtering work under `data_analysis/`; filtering changes the dataset itself, while analysis only interprets it.
+
 ## Analyze data
 
 Create `data_analysis/` only when the user requests an analysis. Place it beside the matching `raw/` and `processed/` directories:

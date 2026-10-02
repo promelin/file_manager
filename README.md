@@ -4,9 +4,11 @@
 
 Requested analyses live beside `raw/` and `processed/` under `data_analysis/<user-chosen-name>/`. Each analysis directory contains only `analysis.py` and `results.txt` unless the user explicitly asks for additional outputs.
 
+When an existing processed dataset needs filtering or refinement, update the existing `processed/process.py` and safely replace the canonical processed output. Do not create parallel filter scripts or duplicate output variants.
+
 ## Install in Codex
 
-This repository is private, so authenticate GitHub access before installing it.
+This repository is public and can be installed directly from the GitHub marketplace source.
 
 Add the repository as a Codex plugin marketplace:
 
